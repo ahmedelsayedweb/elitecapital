@@ -1,0 +1,48 @@
+<!-- BEGIN NAVBAR-->
+<div id="header-nav-offset"></div>
+<nav id="header-nav" class="
+navbar navbar--header
+ {% if layout.show_hero_header(page) %}
+    navbar--overlay
+    {% elseif layout.show_slider_header(page) %}
+    navbar--overlay navbar--brand
+ {% endif %}
+ navbar--{{ option.header_logo_position }}
+">
+  <div class="container">
+    <div class="navbar__row js-navbar-row">
+      <a href="{{ fn('home_url') }}" class="navbar__brand" title="{{ bloginfo('name') }}">
+        {% set header_logo_type = option.header_logo_type %}
+
+        {% if header_logo_type == 'text' %}
+            {{ option.header_logo_text|raw }}
+        {% elseif header_logo_type == 'image' %}
+          {% if option.header_logo is not empty %}
+            {% if option.use_hero_logo and option.header_logo_hero is not empty %}
+              <img src="{{ option.header_logo }}" class="navbar__brand-logo navbar__brand-logo--default" alt="{{ bloginfo('name') }}">
+              <img src="{{ option.header_logo_hero }}" class="navbar__brand-logo navbar__brand-logo--hero" alt="{{ bloginfo('name') }}">
+            {% else %}
+              <img src="{{ option.header_logo }}" class="navbar__brand-logo" alt="{{ bloginfo('name') }}">
+            {% endif %}
+          {% endif %}
+
+        {% elseif header_logo_type == 'svg' %}
+
+          {% if option.header_logo_svg is not empty %}
+            {{ option.header_logo_svg|raw }}
+          {% endif %}
+
+        {% else %}
+          <svg class="navbar__brand-logo navbar__brand-logo--svg">
+            <use xlink:href="#icon-logo"></use>
+          </svg>
+        {% endif %}
+      </a>
+      {% if logged_in %}
+        {{ nav_menu('logged_in_header_menu') }}
+      {% else %}
+        {{ nav_menu('logged_out_header_menu') }}
+      {% endif %}
+    </div>
+  </div>
+</nav>

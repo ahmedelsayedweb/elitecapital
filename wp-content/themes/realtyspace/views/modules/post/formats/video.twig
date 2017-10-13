@@ -1,0 +1,15 @@
+{# @var page \cf47\theme\realtyspace\module\post\viewmodel\SingleViewModel #}
+
+{% if post.video_sources %}
+  <div class="article__preview">
+    <div class="player">
+      <video poster="{{ post.video_cover.src }}" controls crossorigin>
+        {% for video_source in post.video_sources %}
+          <source src="{{ video_source.url }}">
+        {% endfor %}
+      </video>
+    </div>
+  </div>
+{% else %}
+  {% include 'modules/post/formats/default.twig' %}
+{% endif %}
